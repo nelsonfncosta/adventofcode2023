@@ -5,6 +5,12 @@ const input = readFileSync("./day2/input", {
   flag: "r",
 }).split("\r\n");
 
+const rgb = (r, g, b) => ({
+  red: r || 0,
+  green: g || 0,
+  blue: b || 0,
+});
+
 const config = {
   red: 12,
   green: 13,
@@ -19,19 +25,22 @@ input.forEach((line) => {
 
   const subsets = rest.split("; ");
 
-  const isInvalid = subsets.some((set) => {
+  const minimum = rgb();
+
+  subsets.forEach((set) => {
     const pulls = set.split(", ");
 
-    const hasInvalid = pulls.some((pull) => {
+    pulls.forEach((pull) => {
       const [amount, color] = pull.split(" ");
 
-      return parseInt(amount) > config[color];
+      minimum[color] =
+        amount > minimum[color] ? parseInt(amount) : minimum[color];
     });
-
-    return hasInvalid;
   });
 
-  result = isInvalid ? result : result + parseInt(id);
+  const power = Object.values(minimum).reduce((a, b) => a * b, 1);
+
+  result = result + power;
 });
 
 console.log(result);
