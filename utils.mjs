@@ -47,4 +47,8 @@ export const pairs = (array) =>
     []
   );
 
-export default { binarySearch, parseDelimited, pairs };
+export function multiply(arr) {
+  return arr.reduce((a, b) => a * b, 1);
+}
+
+export default { binarySearch, parseDelimited, pairs, multiply };
